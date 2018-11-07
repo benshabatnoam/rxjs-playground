@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { TopNavbarComponent } from './layout/components/top-navbar/top-navbar.component';
 import { TopNavbarLayoutComponent } from './layout/app-layouts/top-navbar-layout/top-navbar-layout.component';
 import { DragNDropComponent } from './components/drag-n-drop/drag-n-drop.component';
+import { PingPongComponent } from './components/ping-pong/ping-pong.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopNavbarComponent,
     TopNavbarLayoutComponent,
-    DragNDropComponent
+    DragNDropComponent,
+    PingPongComponent
   ],
   imports: [
     BrowserModule,
