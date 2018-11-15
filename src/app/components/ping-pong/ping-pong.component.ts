@@ -8,7 +8,11 @@ import { switchMap, concatAll, concatMap, takeUntil, map } from 'rxjs/operators'
   styleUrls: ['./ping-pong.component.css']
 })
 export class PingPongComponent implements OnInit {
+  leftBorder = 0;
+  rightBorder = 1110;
+  playerWidth = 100;
   @ViewChild('playerOne', { read: ElementRef}) playerOne: ElementRef;
+  @ViewChild('game', { read: ElementRef}) game: ElementRef;
 
   constructor() { }
 
@@ -21,17 +25,18 @@ export class PingPongComponent implements OnInit {
         return documentMouseMove.pipe(
           takeUntil(documentMouseUp),
           map((mouseMoveEvent: MouseEvent) => {
-            return mouseMoveEvent.movementX;
+            console.log(mouseMoveEvent);
+            return mouseMoveEvent.pageX - mouseDownEvent.layerX - this.game.nativeElement.offsetLeft;
           })
         );
       })
-    ).subscribe((movementX: number) => {
-      let left = 0;
-      if (this.playerOne.nativeElement.style.left) {
-        left = +/\d/g.exec(this.playerOne.nativeElement.style.left)[0];
+    ).subscribe((left: number) => {
+      if (left > this.rightBorder - this.playerWidth) {
+        left = this.rightBorder - this.playerWidth;
+      } else if (left < this.leftBorder) {
+        left = this.leftBorder;
       }
-      console.log(left);
-      this.playerOne.nativeElement.style.left = left + movementX + 'px';
+      this.playerOne.nativeElement.style.left = left + 'px';
     });
   }
 
